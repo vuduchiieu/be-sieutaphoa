@@ -8,10 +8,12 @@
   ],
   "routes": [
     {
+      "src": "/v1/(.*)",
+      "dest": "src/app.js"
+    },
+    {
       "src": "/(.*)",
-      "dest": "src/app.js",
-      "headers": { "Access-Control-Allow-Origin": "*" },
-      "continue": true
+      "dest": "/"
     }
   ]
 }
