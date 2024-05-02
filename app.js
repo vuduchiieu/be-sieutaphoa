@@ -23,3 +23,5 @@ mongoose
       console.log(`server port http://localhost:3001 is running !!!`)
     )
   );
+
+export default app;
