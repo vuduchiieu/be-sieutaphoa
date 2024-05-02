@@ -1,10 +1,12 @@
 import User from "../model/user.js";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 const authController = {
   register: async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, password, email } = req.body;
     try {
       const user = await User.findOne({ username });
+
       const salt = await bcrypt.genSalt(10);
       const hashed = await bcrypt.hash(password, salt);
 
@@ -17,21 +19,19 @@ const authController = {
         password: hashed,
       });
       await newUser.save();
-      res.json(newUser);
+
+      const accessToken = jwt.sign(
+        { id: newUser._id, username: newUser.username },
+        process.env.JWT_ACCESS_KEY
+      );
+
+      res.json(accessToken);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   },
-  getUsers: async (req, res) => {
-    try {
-      const users = await User.find();
-      res.json(users);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  },
+
   login: async (req, res) => {
     const { username, email } = req.body;
     try {
@@ -46,8 +46,11 @@ const authController = {
       if (!password) {
         res.status(404).json("password không hợp lệ!");
       }
-
-      res.json(user);
+      const accessToken = jwt.sign(
+        { id: user._id, username: user.username },
+        process.env.JWT_ACCESS_KEY
+      );
+      res.json(accessToken);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
