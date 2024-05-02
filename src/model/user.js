@@ -4,6 +4,12 @@ const userSchema = new mongoose.Schema({
   username: String,
   email: String,
   password: String,
+  fullname: String,
+  phone: Number,
+  detailedAddress: String,
+  town: String,
+  city: String,
+  postcode: Number,
 });
 
 const User = mongoose.model("users", userSchema);
