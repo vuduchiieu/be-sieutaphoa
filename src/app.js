@@ -6,25 +6,24 @@ import dotenv from "dotenv";
 import authRouter from "./routes/authRoute.js";
 import morgan from "morgan";
 
-const app = express();
-
 dotenv.config();
+
+const app = express();
+app.use(morgan("combined"));
+
 app.use(express.json());
 app.use(
   cors({
     origin: "*",
   })
 );
-app.use(morgan("combined"));
 
 app.use("/v1/auth", authRouter);
 
 mongoose
   .connect(process.env.MONGODB)
   .then(() =>
-    app.listen(process.env.PORT, () =>
-      console.log(
-        `server port http://localhost:${process.env.PORT} is running !!!`
-      )
+    app.listen(3001, () =>
+      console.log(`server port http://localhost:3001 is running !!!`)
     )
   );
