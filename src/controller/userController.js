@@ -86,7 +86,8 @@ const userController = {
       }
 
       await user.save();
-      res.json(user);
+      const accessToken = jwt.sign({ user }, process.env.JWT_ACCESS_KEY);
+      res.json(accessToken);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
