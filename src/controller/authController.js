@@ -46,10 +46,7 @@ const authController = {
       if (!password) {
         res.status(404).json("password không hợp lệ!");
       }
-      const accessToken = jwt.sign(
-        { id: user._id, username: user.username },
-        process.env.JWT_ACCESS_KEY
-      );
+      const accessToken = jwt.sign({ user }, process.env.JWT_ACCESS_KEY);
       res.json(accessToken);
     } catch (error) {
       console.error(error);

@@ -27,7 +27,6 @@ const userController = {
   updateUser: async (req, res) => {
     const userId = req.params.id;
     const file = req.file;
-    console.log(file);
     const {
       username,
       email,
