@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import User from "../model/user.js";
 import { cloudinary } from "../utils/uploader.js";
 
